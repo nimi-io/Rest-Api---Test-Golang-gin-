@@ -26,12 +26,14 @@ var (
 )
 
 func init() {
-		err := godotenv.Load()
-
+	err := godotenv.Load("./.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	ctx = context.TODO()
 
-	MONGO_URL:= os.Getenv("MONGO_URL")
-
+	MONGO_URL := os.Getenv("MONGO_URL")
+	log.Println(MONGO_URL)
 	mongoOptions := options.Client().ApplyURI(MONGO_URL)
 	mongoConnect, err = mongo.Connect(ctx, mongoOptions)
 	if err != nil {
